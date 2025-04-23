@@ -36,12 +36,12 @@ function usarBuscador() {
 }
 
 function App() {
-  const { peliculas } = usarPeliculas();
   const { buscador, updateBuscador, error } = usarBuscador();
+  const { peliculas, obtenerPeliculas } = usarPeliculas({ buscador });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log({ buscador });
+    obtenerPeliculas();
   };
 
   const handleChange = (event) => {

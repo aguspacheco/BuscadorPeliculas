@@ -3,15 +3,42 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  max-width: 800px;
 }
 
 main {
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 form {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.peliculas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.pelicula {
+  text-align: center;
+}
+
+.pelicula h3,
+.pelicula p {
+  margin: 0;
+}
+
+.pelicula img {
+  border-radius: 8px;
+  margin-top: 8px;
 }
