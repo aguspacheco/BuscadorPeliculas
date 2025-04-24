@@ -1,27 +1,26 @@
 import { useState } from "react";
+import { buscarPeliculas } from "../services/peliculas";
 
 export function usePeliculas({ buscador }) {
-  const [responsePeliculas, setResponsePeliculas] = useState([]);
-  const peliculas = responsePeliculas.Search;
+  const [peliculas, setPeliculas] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const busquedaPrevia = useRef(buscador);
 
-  const mapeoPeliculas = peliculas?.map((pelicula) => ({
-    id: pelicula.imdb.ID,
-    title: pelicula.Title,
-    year: pelicula.Year,
-    image: pelicula.Poster,
-  }));
+  const obtenerPeliculas = async () => {
+    if (buscador === busquedaPrevia.current) return;
 
-  const obtenerPeliculas = () => {
-    if (buscador) {
-      fetch(`https://www.omdapi.com/?apikey=4287ad07&s=${buscador}`)
-        .then((res) => res.json())
-        .then((json) => {
-          setResponsePeliculas(json);
-        });
-    } else {
-      setResponsePeliculas(withoutResults);
+    try {
+      setLoading(true);
+      setError(null);
+      busquedaPrevia.current = buscador;
+      const nuevaPelicula = await buscarPeliculas({ buscador });
+      setPeliculas(nuevaPelicula);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setLoading(false);
     }
   };
-
-  return { peliculas: mapeoPeliculas, obtenerPeliculas };
+  return { peliculas, obtenerPeliculas, loading };
 }

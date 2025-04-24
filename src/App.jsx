@@ -1,9 +1,9 @@
 import "./App.css";
-import { usarPeliculas } from "./hoocks/usarPeliculas";
+import { usePeliculas } from "./hoocks/usarPeliculas";
 import { Peliculas } from "./components/Peliculas";
 import { useState, useEffect, useRef } from "react";
 
-function usarBuscador() {
+function useBuscador() {
   const [buscador, updateBuscador] = useState("");
   const [error, setError] = useState(null);
   const esPrimerInput = useRef(true);
@@ -36,8 +36,8 @@ function usarBuscador() {
 }
 
 function App() {
-  const { buscador, updateBuscador, error } = usarBuscador();
-  const { peliculas, obtenerPeliculas } = usarPeliculas({ buscador });
+  const { buscador, updateBuscador, error } = useBuscador();
+  const { peliculas, loading, obtenerPeliculas } = usePeliculas({ buscador });
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,9 +64,7 @@ function App() {
         {error && <p style={{ color: "red" }}>{error}</p>}
       </header>
 
-      <main>
-        <Peliculas peliculas={peliculas} />
-      </main>
+      <main>{loading ? <p>Buscando...</p> : <Peliculas peliculas={peliculas} />}</main>
     </div>
   );
 }
