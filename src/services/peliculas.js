@@ -11,7 +11,7 @@ export const buscarPeliculas = async ({ buscador }) => {
       id: pelicula.imdbID,
       title: pelicula.Title,
       year: pelicula.Year,
-      image: pelicula.Poster,
+      poster: pelicula.Poster,
     }));
   } catch (e) {
     throw new Error("Error al busca la pelicula");
